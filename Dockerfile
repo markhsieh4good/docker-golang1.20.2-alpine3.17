@@ -1,5 +1,5 @@
-FROM golang:1.14-alpine3.13
-# docker pull golang:1.14-alpine3.13
+FROM golang:1.20.2-alpine3.17
+# docker pull golang:1.20.2-alpine3.17
 LABEL MAINTAINER "mark.hsieh <qqzcmark@gmail.com>"
 
 RUN apk update 
