@@ -16,9 +16,10 @@ build-image:
   tags:
     - builder
   before_script:
+    - git pull
     - echo "target container registry host:$CI_REGISTRY"
     - echo "glpat-aQET5A_PwPpFRQSEnKf5" | sudo docker login -u "container_registry" --password-stdin "$CI_REGISTRY"
-    - VERSION=$(git describe --abbrev=0 2>/dev/null || echo 'dev')
+    - VERSION=`git describe --abbrev=0 2>/dev/null || echo 'dev'`
   script:
     - sudo docker build --pull -t "$CI_REGISTRY_IMAGE:$VERSION" -f Dockerfile .
     - sudo docker images "$CI_REGISTRY_IMAGE:$VERSION" 
