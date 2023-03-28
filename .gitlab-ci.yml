@@ -20,7 +20,7 @@ build-image:
     - echo "glpat-aQET5A_PwPpFRQSEnKf5" | sudo docker login -u "container_registry" --password-stdin "$CI_REGISTRY"
   script:
     - git checkout "$CI_COMMIT_REF_NAME" && git pull
-    - VERSION=`echo "$CI_COMMIT_TAG" || echo 'dev'`
+    - VERSION=`bash ./utility_get_git_latest_tag_name.sh`
     - sudo docker build --pull -t "$CI_REGISTRY_IMAGE:$VERSION" -f Dockerfile .
     - sudo docker images "$CI_REGISTRY_IMAGE:$VERSION" 
     - sudo docker push "$CI_REGISTRY_IMAGE:$VERSION"
