@@ -12,6 +12,6 @@ COPY utility_loopback.sh .
 RUN chmod +x ./utility_loopback.sh
 RUN ./utility_loopback.sh
 
-COPY utility_namespace_dns.sh
+COPY utility_namespace_dns.sh .
 RUN chmod +x ./utility_namespace_dns.sh
 RUN ./utility_namespace_dns.sh

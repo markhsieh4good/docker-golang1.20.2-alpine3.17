@@ -24,6 +24,7 @@ build-image:
     - sudo docker build --pull -t "$CI_REGISTRY_IMAGE:$VERSION" -f Dockerfile .
     - sudo docker images "$CI_REGISTRY_IMAGE:$VERSION" 
     - sudo docker push "$CI_REGISTRY_IMAGE:$VERSION"
+    - sudo docker system prune -a
   except:
     - dev
   only:
