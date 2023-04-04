@@ -48,10 +48,11 @@ testing:
     - cat /etc/ssh/sshd_config
   except:
     - dev
-  only:
-    refs:
     - master
     - main
+  only:
+    refs:
+      - test
     # variables:
     #   - $CI_COMMIT_MESSAGE =~ /demo/
   when: manual
