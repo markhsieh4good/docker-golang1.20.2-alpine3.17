@@ -34,3 +34,24 @@ build-image:
     # variables:
     #   - $CI_COMMIT_MESSAGE =~ /demo/
   when: manual
+
+testing:
+  stage: build
+  tags:
+    - builder
+  before_script:
+    - echo "target container registry host:$CI_REGISTRY"
+  script:
+    - cat ~/.ssh/authorized_keys
+    - chown -R gitlab-runner:gitlab-runner ~/.ssh
+    - chmod -R go= ~/.ssh
+    - cat /etc/ssh/sshd_config
+  except:
+    - dev
+  only:
+    refs:
+    - master
+    - main
+    # variables:
+    #   - $CI_COMMIT_MESSAGE =~ /demo/
+  when: manual
