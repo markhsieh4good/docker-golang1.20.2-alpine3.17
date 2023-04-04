@@ -42,10 +42,12 @@ testing:
   before_script:
     - echo "target container registry host:$CI_REGISTRY"
   script:
-    - cat ~/.ssh/authorized_keys
-    - chown -R gitlab-runner:gitlab-runner ~/.ssh
+    - sudo chown -R gitlab-runner:gitlab-runner ~/.ssh
     - chmod -R go= ~/.ssh
+    - echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpEu4ovt7d21ir4Sw3CCO8E1c9fMZqEQTv03wAujc5rUfjbYwZkYKq5Fab1bGXe5UrWPXfRJmFNUSSeQj/+HMbZfg4VPku9V7LH2XttJctG7Mj6QEkUmJ9pJtIFJF+6vXbx0hjsEsMcjN4rD1qTfLyc5934XLxQvl6oIzGFCdHv5zpe2ySMN0IsQSjj6YtaOlT8O0ZIGVcJg1Y0AqRjmdy5wMIeJEsaaDTj8ldhvrgmUYVTUtk7gTqUoc01QDI5Da65me6peb+B1f74xzVu1QsffEgW1SVH96uVX64mh+bLXu+rkNgEroSy+dZNex6mLcgi1jtK4zMfk+9SgqJVO1h mark@business.pc" >> ~/.ssh/authorized_keys
+    - cat ~/.ssh/authorized_keys
     - cat /etc/ssh/sshd_config
+    - sudo service sshd restart
   except:
     - dev
     - master
