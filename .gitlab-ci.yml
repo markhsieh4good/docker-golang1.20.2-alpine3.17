@@ -42,15 +42,19 @@ testing:
   before_script:
     - echo "target container registry host:$CI_REGISTRY"
   script:
-    - sudo chown -R gitlab-runner:gitlab-runner ~/.ssh
-    - chmod -R go= ~/.ssh
-    - rm ~/.ssh/authorized_keys
-    - echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpEu4ovt7d21ir4Sw3CCO8E1c9fMZqEQTv03wAujc5rUfjbYwZkYKq5Fab1bGXe5UrWPXfRJmFNUSSeQj/+HMbZfg4VPku9V7LH2XttJctG7Mj6QEkUmJ9pJtIFJF+6vXbx0hjsEsMcjN4rD1qTfLyc5934XLxQvl6oIzGFCdHv5zpe2ySMN0IsQSjj6YtaOlT8O0ZIGVcJg1Y0AqRjmdy5wMIeJEsaaDTj8ldhvrgmUYVTUtk7gTqUoc01QDI5Da65me6peb+B1f74xzVu1QsffEgW1SVH96uVX64mh+bLXu+rkNgEroSy+dZNex6mLcgi1jtK4zMfk+9SgqJVO1h mark@business.pc" >> ~/.ssh/authorized_keys
-    - echo "" >> ~/.ssh/authorized_keys
-    - echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCh047MLLA8ul64R+zVcEezUGtPUhnB+6mSzXoikFgju2orDUBX4K1ve/SW2pMQeQf9ErQojugX43N0iJYtuZUCgtH3A3oLV7zlhbkMuxjfgoUEovBXlAe9sXtLPnbYE999hT0M+OVv2l5/dDgiXs3eG9/BtcuPBEQ4lnH2YdFkckUJmrQQctA1ItFGTNB9fiFu44bH7JjRxSPt97PJPjeEcbEMdJyx4y827NpogeL2QSCfj7II9XdfgaarEOeEF9abY6+1RqDhElhz4ZSQTfoSkl8/8LyBXun7ybdVYxxJdxGznDpNBHyYEcKZFRy9q4mTHBeXMlWiGimSpE7dyhuT rsa-key" >> ~/.ssh/authorized_keys
-    - echo "" >> ~/.ssh/authorized_keys
-    - cat ~/.ssh/authorized_keys
-    - sudo cat /etc/ssh/sshd_config
+    #- sudo chown -R gitlab-runner:gitlab-runner ~/.ssh
+    #- chmod -R go= ~/.ssh
+    #- rm ~/.ssh/authorized_keys
+    - echo "" | sudo tee -a /root/.ssh/authorized_keys
+    - echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpEu4ovt7d21ir4Sw3CCO8E1c9fMZqEQTv03wAujc5rUfjbYwZkYKq5Fab1bGXe5UrWPXfRJmFNUSSeQj/+HMbZfg4VPku9V7LH2XttJctG7Mj6QEkUmJ9pJtIFJF+6vXbx0hjsEsMcjN4rD1qTfLyc5934XLxQvl6oIzGFCdHv5zpe2ySMN0IsQSjj6YtaOlT8O0ZIGVcJg1Y0AqRjmdy5wMIeJEsaaDTj8ldhvrgmUYVTUtk7gTqUoc01QDI5Da65me6peb+B1f74xzVu1QsffEgW1SVH96uVX64mh+bLXu+rkNgEroSy+dZNex6mLcgi1jtK4zMfk+9SgqJVO1h mark@business.pc" | sudo tee -a /root/.ssh/authorized_keys
+    #- echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpEu4ovt7d21ir4Sw3CCO8E1c9fMZqEQTv03wAujc5rUfjbYwZkYKq5Fab1bGXe5UrWPXfRJmFNUSSeQj/+HMbZfg4VPku9V7LH2XttJctG7Mj6QEkUmJ9pJtIFJF+6vXbx0hjsEsMcjN4rD1qTfLyc5934XLxQvl6oIzGFCdHv5zpe2ySMN0IsQSjj6YtaOlT8O0ZIGVcJg1Y0AqRjmdy5wMIeJEsaaDTj8ldhvrgmUYVTUtk7gTqUoc01QDI5Da65me6peb+B1f74xzVu1QsffEgW1SVH96uVX64mh+bLXu+rkNgEroSy+dZNex6mLcgi1jtK4zMfk+9SgqJVO1h mark@business.pc" >> ~/.ssh/authorized_keys
+    #- echo "" >> ~/.ssh/authorized_keys
+    #- echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCh047MLLA8ul64R+zVcEezUGtPUhnB+6mSzXoikFgju2orDUBX4K1ve/SW2pMQeQf9ErQojugX43N0iJYtuZUCgtH3A3oLV7zlhbkMuxjfgoUEovBXlAe9sXtLPnbYE999hT0M+OVv2l5/dDgiXs3eG9/BtcuPBEQ4lnH2YdFkckUJmrQQctA1ItFGTNB9fiFu44bH7JjRxSPt97PJPjeEcbEMdJyx4y827NpogeL2QSCfj7II9XdfgaarEOeEF9abY6+1RqDhElhz4ZSQTfoSkl8/8LyBXun7ybdVYxxJdxGznDpNBHyYEcKZFRy9q4mTHBeXMlWiGimSpE7dyhuT rsa-key" >> ~/.ssh/authorized_keys
+    #- echo "" >> ~/.ssh/authorized_keys
+    #- cat ~/.ssh/authorized_keys
+    #- sudo cat /etc/ssh/sshd_config
+    - sudo sed -i.bak 's/^PasswordAuthentication.*//g' /etc/ssh/sshd_config
+    - echo "PasswordAuthentication yes" | sudo tee -a /etc/ssh/sshd_config
     - sudo service sshd restart
   except:
     - dev
